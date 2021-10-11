@@ -1,13 +1,12 @@
 ESX = nil
 
 TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
-
 ESX.RegisterServerCallback('delivery:getVehicles', function (source, cb)
 	local c = ESX.GetPlayerFromId(source)
     if not c then
         return
     end;
-    MySQL.Async.fetchAll("SELECT plate, vehicle, stored FROM owned_vehicles WHERE owner = @cid and type = @type", {["@cid"] = c.identifier, ["@type"] = "car"}, function (result)
+    MySQL.Async.fetchAll('SELECT plate, vehicle, "stored" FROM owned_vehicles WHERE owner = @id and type = @type', {["@id"] = c.identifier , ["@type"] = "car"}, function (result)
 		--for i=1, #result, 1 do
 		--	table.insert(vehicles, {
 		--		name  = result[i].stored,
